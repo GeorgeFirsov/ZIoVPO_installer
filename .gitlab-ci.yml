@@ -1,0 +1,14 @@
+stages:
+  - build
+
+build_installer:
+  stage: build
+  tags:
+    - windows
+  script:
+    - powershell -ExecutionPolicy Bypass -File .\Installer\build_installer.ps1
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - Installer\output\*.exe

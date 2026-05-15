@@ -1,0 +1,86 @@
+[
+    uuid(5d74c1c4-8fa7-4cb2-bc4a-94d13cf5a89b),
+    version(1.0),
+    pointer_default(unique)
+]
+interface ServiceControlRpc
+{
+    long RpcGetCurrentUser(
+        [in] handle_t bindingHandle,
+        [out] long* isAuthenticated,
+        [in] long userNameBufferLength,
+        [out, string, size_is(userNameBufferLength)] wchar_t* userNameBuffer);
+
+    long RpcLogin(
+        [in] handle_t bindingHandle,
+        [in, string] wchar_t* username,
+        [in, string] wchar_t* password,
+        [in] long errorMessageBufferLength,
+        [out, string, size_is(errorMessageBufferLength)] wchar_t* errorMessageBuffer);
+
+    long RpcLogout([in] handle_t bindingHandle);
+
+    long RpcGetLicenseInfo(
+        [in] handle_t bindingHandle,
+        [out] long* hasLicense,
+        [out] long* isBlocked,
+        [in] long expirationDateBufferLength,
+        [out, string, size_is(expirationDateBufferLength)] wchar_t* expirationDateBuffer);
+
+    long RpcActivateProduct(
+        [in] handle_t bindingHandle,
+        [in, string] wchar_t* activationCode,
+        [in] long errorMessageBufferLength,
+        [out, string, size_is(errorMessageBufferLength)] wchar_t* errorMessageBuffer);
+
+    long RpcGetAvDatabaseInfo(
+        [in] handle_t bindingHandle,
+        [out] long* isLoaded,
+        [out] long* recordCount,
+        [in] long releaseDateBufferLength,
+        [out, string, size_is(releaseDateBufferLength)] wchar_t* releaseDateBuffer);
+
+    long RpcScanFile(
+        [in] handle_t bindingHandle,
+        [in, string] wchar_t* filePath,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcScanDirectory(
+        [in] handle_t bindingHandle,
+        [in, string] wchar_t* directoryPath,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcScanFixedDrives(
+        [in] handle_t bindingHandle,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcSetScheduledScan(
+        [in] handle_t bindingHandle,
+        [in] long enabled,
+        [in, string] wchar_t* path,
+        [in] long intervalMinutes,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcGetScheduledScanResult(
+        [in] handle_t bindingHandle,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcSetMonitoredDirectory(
+        [in] handle_t bindingHandle,
+        [in] long enabled,
+        [in, string] wchar_t* directoryPath,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    long RpcGetMonitorResult(
+        [in] handle_t bindingHandle,
+        [in] long resultBufferLength,
+        [out, string, size_is(resultBufferLength)] wchar_t* resultBuffer);
+
+    void RpcStopService([in] handle_t bindingHandle);
+}
